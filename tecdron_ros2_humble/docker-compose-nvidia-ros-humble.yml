@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  nvidia_ros_noetic:
+    image: nvidia_ros_humble:latest
+    container_name: nvidia_ros_humble_container
+    hostname: nvidia_ros_humble_container
+    runtime: nvidia
+    environment:
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - NVIDIA_VISIBLE_DEVICES=all
+      - DISPLAY
+    devices:
+      - /dev/dri
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    stdin_open: true
+    tty: true
+    command: bash
+    restart: no
