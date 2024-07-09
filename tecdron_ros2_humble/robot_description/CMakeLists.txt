@@ -41,7 +41,6 @@ install(TARGETS
 install(
   DIRECTORY
     urdf
-    rviz
     launch
     meshes
     config
