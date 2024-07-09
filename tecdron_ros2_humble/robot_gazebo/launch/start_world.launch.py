@@ -21,7 +21,7 @@ def generate_launch_description():
 
     # Set the path to the WORLD model files. Is to find the models inside the models folder in my_box_bot_gazebo package
     gazebo_models_path = os.path.join(pkg_box_bot_gazebo, 'models')
-    # os.environ["GAZEBO_MODEL_PATH"] = gazebo_models_path
+    os.environ["GAZEBO_MODEL_PATH"] = gazebo_models_path
 
     if 'GAZEBO_MODEL_PATH' in os.environ:
         os.environ['GAZEBO_MODEL_PATH'] =  os.environ['GAZEBO_MODEL_PATH'] + ':' + install_dir + '/share' + ':' + gazebo_models_path
@@ -40,9 +40,9 @@ def generate_launch_description():
 
 
     # Gazebo launch
-    ExecuteProcess(
-            cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'],
-            output='screen'),
+    #ExecuteProcess(
+    #        cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'],
+    #        output='screen'),
     
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
