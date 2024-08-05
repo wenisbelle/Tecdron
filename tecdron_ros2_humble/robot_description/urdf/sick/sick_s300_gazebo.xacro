@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot name="sensor_sick_s300_gazebo" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="sensor_sick_s300_gazebo">
+     <gazebo>
+          <plugin
+               filename="libignition-gazebo-sensors-system"
+               name="ignition::gazebo::systems::Sensors">
+               <!-- use ogre2 if ogre v2.x is installed, otherwise use ogre -->
+               <render_engine>ogre2</render_engine>
+          </plugin>
+     </gazebo>
+    </xacro:macro>
+
+</robot>

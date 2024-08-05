@@ -56,7 +56,7 @@ private:
     wheel_speed_left_front = (vx - vy - (L+W) * wz) / WHEEL_RADIUS;
     wheel_speed_right_front = (vx + vy + (L+W) * wz) / WHEEL_RADIUS;
     wheel_speed_left_back = (vx + vy - (L+W) * wz)/ WHEEL_RADIUS;
-    wheel_speed_right_back = (vx - vy + (L-W) * wz) / WHEEL_RADIUS;
+    wheel_speed_right_back = (vx - vy + (L+W) * wz) / WHEEL_RADIUS;
   }
 
   rclcpp::TimerBase::SharedPtr timer_;

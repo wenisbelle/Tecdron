@@ -5,8 +5,8 @@
   <!-- Constants -->
   <xacro:property name="PI" value="3.1415926535897931" />
   <xacro:property name="wheel_radius" value="0.127" />
-  <xacro:property name="wheel_height" value="0.087" />
-  <xacro:property name="wheel_mass" value="10" />
+  <xacro:property name="wheel_height" value="0.036" /><!--0.087-->
+  <xacro:property name="wheel_mass" value="10.0" />
   <!-- in kg-->
 
   <!-- Simple Macro to calculate inertia -->
@@ -21,14 +21,13 @@
       <xacro:property name="fdir" value="1 -1 0" />
     </xacro:if>
     <xacro:if value="${prefix == 'tecdron_front_right'}">
-      <xacro:property name="visual_rotation" value="${pi}" />
       <xacro:property name="fdir" value="1 1 0" />
     </xacro:if>
     <xacro:if value="${prefix == 'tecdron_back_right'}">
-      <xacro:property name="fdir" value="1 1 0" />
+      <xacro:property name="fdir" value="1 -1 0" />
     </xacro:if>
     <xacro:if value="${prefix == 'tecdron_back_left'}">
-      <xacro:property name="fdir" value="1 -1 0" />
+      <xacro:property name="fdir" value="1 1 0" />
     </xacro:if>
 
     <link name="${prefix}_wheel_link">
@@ -44,7 +43,7 @@
         <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_height}" />
       </inertial>
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
         <geometry>
          <sphere radius="0.001"/>
         </geometry>
@@ -57,7 +56,7 @@
       <child link="${prefix}_wheel_link"/>
       <xacro:insert_block name="origin" />
       <axis xyz="0 1 0"/>
-      <limit effort="1.27" velocity="21.0" />
+      <limit effort="1000" velocity="21.0" />
       <dynamics damping="0.001" friction="0.001" />
     </joint>
 
@@ -69,19 +68,19 @@
       </joint>
     </transmission>
 
-  <gazebo reference="${prefix}_wheel_link">
+  <gazebo reference="${prefix}_wheel_link" xmlns:ignition="http://ignitionrobotics.org/schema">
     <collision>
       <surface>
         <friction>
           <ode>
             <mu>1.0</mu>
-            <mu2>0.05</mu2>
-            <fdir1>${fdir}</fdir1>
+            <mu2>0.0</mu2>
+            <fdir1 ignition:expressed_in="base_link">${fdir}</fdir1>
           </ode>
         </friction>
       </surface>
     </collision>
-	</gazebo>
+  </gazebo>
 
   </xacro:macro>
     

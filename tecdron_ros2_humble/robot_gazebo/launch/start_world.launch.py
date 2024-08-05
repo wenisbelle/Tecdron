@@ -1,59 +1,51 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
 import os
-
-from ament_index_python.packages import get_package_share_directory
+from ament_index_python.packages import (get_package_prefix, get_package_share_directory)
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.actions import IncludeLaunchDescription, ExecuteProcess
+from launch.actions import (DeclareLaunchArgument, IncludeLaunchDescription)
+from launch.substitutions import (PathJoinSubstitution, LaunchConfiguration)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from ament_index_python.packages import get_package_prefix
+from launch_ros.actions import SetParameter
 
+# ROS2 Launch System will look for this function definition #
 def generate_launch_description():
 
-    pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
-    pkg_box_bot_gazebo = get_package_share_directory('robot_gazebo')
+    # Get Package Description and Directory #
+    package_description = "robot_description"
+    package_directory = get_package_share_directory(package_description)
 
-    # We get the whole install dir
-    # We do this to avoid having to copy or softlink manually the packages so that gazebo can find them
-    description_package_name = "robot_description"
-    install_dir = get_package_prefix(description_package_name)
-
-    # Set the path to the WORLD model files. Is to find the models inside the models folder in my_box_bot_gazebo package
-    gazebo_models_path = os.path.join(pkg_box_bot_gazebo, 'models')
-    os.environ["GAZEBO_MODEL_PATH"] = gazebo_models_path
-
-    if 'GAZEBO_MODEL_PATH' in os.environ:
-        os.environ['GAZEBO_MODEL_PATH'] =  os.environ['GAZEBO_MODEL_PATH'] + ':' + install_dir + '/share' + ':' + gazebo_models_path
+    # Set the Path to Robot Mesh Models for Loading in Gazebo Sim #
+    # NOTE: Do this BEFORE launching Gazebo Sim #
+    install_dir_path = (get_package_prefix(package_description) + "/share")
+    robot_meshes_path = os.path.join(package_directory, "meshes")
+    gazebo_resource_paths = [install_dir_path, robot_meshes_path]
+    if "IGN_GAZEBO_RESOURCE_PATH" in os.environ:
+        for resource_path in gazebo_resource_paths:
+            if resource_path not in os.environ["IGN_GAZEBO_RESOURCE_PATH"]:
+                os.environ["IGN_GAZEBO_RESOURCE_PATH"] += (':' + resource_path)
     else:
-        os.environ['GAZEBO_MODEL_PATH'] =  install_dir + "/share" + ':' + gazebo_models_path
+        os.environ["IGN_GAZEBO_RESOURCE_PATH"] = (':'.join(gazebo_resource_paths))
 
-    if 'GAZEBO_PLUGIN_PATH' in os.environ:
-        os.environ['GAZEBO_PLUGIN_PATH'] = os.environ['GAZEBO_PLUGIN_PATH'] + ':' + install_dir + '/lib'
-    else:
-        os.environ['GAZEBO_PLUGIN_PATH'] = install_dir + '/lib'
-
+    # Load Empty World SDF from Gazebo Sim Package #
+    world_file = "empty.sdf"
+    world_config = LaunchConfiguration("world")
+    declare_world_arg = DeclareLaunchArgument("world",
+                                              default_value=["-r ", world_file],
+                                              description="SDF World File")
     
-
-    print("GAZEBO MODELS PATH=="+str(os.environ["GAZEBO_MODEL_PATH"]))
-    print("GAZEBO PLUGINS PATH=="+str(os.environ["GAZEBO_PLUGIN_PATH"]))
-
-
-    # Gazebo launch
-    #ExecuteProcess(
-    #        cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_factory.so'],
-    #        output='screen'),
-    
-    gazebo = IncludeLaunchDescription(
+    # Declare GazeboSim Launch #
+    gzsim_pkg = get_package_share_directory("ros_gz_sim")
+    gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py'),
-        )
-    )    
+            PathJoinSubstitution([gzsim_pkg, "launch", "gz_sim.launch.py"])),
+            launch_arguments={"gz_args": world_config}.items(),
+    )
 
-    return LaunchDescription([
-        #DeclareLaunchArgument(
-        #  'world',
-          #default_value=[os.path.join(pkg_box_bot_gazebo, 'worlds', 'warehouse.world'), ''],
-          #description='SDF world file'),
-        gazebo
-    ])
+    # Create and Return the Launch Description Object #
+    return LaunchDescription(
+        [
+            declare_world_arg,
+            # Sets use_sim_time for all nodes started below (doesn't work for nodes started from ignition gazebo) #
+            SetParameter(name="use_sim_time", value=True),
+            gz_sim,
+        ]
+    )

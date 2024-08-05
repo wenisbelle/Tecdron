@@ -9,12 +9,11 @@
     <xacro:property name="wheel_width" value="0.175" />
     <xacro:property name="wheel_radius" value="0.127" />
 
-    <!-- BASE FOOTPRINT -->
+    <!-- BASE FOOTPRINT-->
     <link name="base_footprint">
       <inertial>
         <mass value="1.0" />
         <origin xyz="0 0 0" />
-        <inertia ixx="1.391" ixy="0.004" ixz="0.0" iyy="6.853" iyz="0.0" izz="10.125" />
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -28,8 +27,8 @@
       <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0" />
       <parent link="base_footprint"/>
       <child link="base_link" />
-    </joint>
-  </xacro:macro>
+    </joint> 
+  
   <!-- BASE_LINK -->
   <link name="base_link">
     <collision>
@@ -39,9 +38,9 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="100.0" />
-      <origin xyz="0 0 0" />
-      <inertia ixx="1.391" ixy="0.004" ixz="0.0" iyy="6.853" iyz="0.0" izz="10.125" />
+      <mass value="10" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia ixx="1.5417" ixy="0" ixz="0" iyy="3.467" iyz="0" izz="4.742" />
     </inertial>
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
@@ -50,5 +49,7 @@
       </geometry>
     </visual>
   </link>
+
+  </xacro:macro>
 </robot>
 

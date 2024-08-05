@@ -19,12 +19,19 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/r
 
 RUN apt update \
  && apt install -y ros-humble-desktop \
- && apt install -y ros-humble-gazebo-ros-pkgs
+ && apt install -y ros-humble-ros-gz
 
 RUN apt-get install -y python3-rosdep \
  && apt-get install -y python3-colcon-common-extensions
 
 RUN apt-get install -y git
+
+RUN apt-get install -y ros-humble-ros2-control \
+    ros-humble-ign-ros2-control \
+    ros-humble-joint-state-broadcaster \
+    ros-humble-joint-state-publisher \
+    ros-humble-joint-trajectory-controller \
+    ros-humble-velocity-controllers
 
 # colocar aqui o git clone desse meu projeto
 #RUN cd src && git clone https://github.com/wenisbelle/Tecdron.git
