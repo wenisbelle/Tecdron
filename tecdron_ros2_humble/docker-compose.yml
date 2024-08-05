@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   tecdron_humble:
-    image: tedron_humble:latest
+    image: tecdron_humble:latest
     container_name: tecdron_humble_container
     hostname: tecdron_humble_container
     runtime: nvidia
@@ -25,5 +25,6 @@ services:
     stdin_open: true
     tty: true
     restart: no
+    network_mode: "host"  # Add this line to use the host network
     command: /bin/bash  # Add this line to start a bash shell
 

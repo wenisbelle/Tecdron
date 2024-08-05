@@ -19,9 +19,9 @@ def generate_launch_description():
     gz_spawn_entity = Node(
         package="ros_gz_sim",
         executable="create",
-        name="tecdron_spawn_entity",
+        name="my_robot_spawn",
         arguments=[
-            "-name", "tecdron",
+            "-name", "my_robot",
             "-allow_renaming", "true",
             "-topic", "robot_description",
             "-x", LaunchConfiguration("x"),
@@ -44,11 +44,9 @@ def generate_launch_description():
             "/front_sick/laser/scan" + "@sensor_msgs/msg/LaserScan" + "[ignition.msgs.LaserScan",
             "/rear_sick/laser/scan" + "@sensor_msgs/msg/LaserScan" + "[ignition.msgs.LaserScan",
             "/imu" + "@sensor_msgs/msg/Imu" + "[ignition.msgs.IMU",
-            "/world/empty/model/tecdron/joint_state" + "@sensor_msgs/msg/JointState" + "[ignition.msgs.Model",
-            
         ],
         remappings=[
-            ('/world/empty/model/tecdron/joint_state', 'joint_states'),
+            # there are no remappings for this robot description
         ],
         output="screen",
     )

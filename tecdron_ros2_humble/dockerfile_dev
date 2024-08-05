@@ -4,19 +4,10 @@ SHELL [ "/bin/bash" , "-c" ]
 
 # Install catkin tools#
 RUN apt-get update \
-    && apt-get install -y git python3-colcon-common-extensions \
-    && apt-get install -y \
-        ros-humble-xacro \
-        ros-humble-urdf \
-        ros-humble-ros2-control \
-        ros-humble-gazebo-ros2-control \
-        ros-humble-joint-state-publisher \
-        ros-humble-joint-trajectory-controller \
-        ros-humble-joint-state-broadcaster \
-        ros-humble-velocity-controllers \
-        ros-humble-pcl-ros 
+    && apt-get install -y git python3-colcon-common-extensions
 
-RUN apt-get install net-tools
+RUN apt-get install -y net-tools \
+    && apt-get install -y gedit
 
 
 RUN mkdir -p /tecdron_ws/src \
@@ -25,9 +16,15 @@ RUN mkdir -p /tecdron_ws/src \
 COPY ./ /tecdron_ws/src 
 
 WORKDIR /tecdron_ws
-RUN source /opt/ros/humble/setup.bash \
-    && colcon build \
-    && source /tecdron_ws/install/setup.bash
+
+RUN rosdep init 
+RUN rosdep update
+RUN rosdep install --from-paths src --ignore-src -r -y
+
+
+RUN source /opt/ros/humble/setup.bash 
+#    && colcon build \
+#    && source /tecdron_ws/install/setup.bash
 
 RUN echo "source /tecdron_ws/install/setup.bash" >> ~/.bashrc
 
