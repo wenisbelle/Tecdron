@@ -26,11 +26,19 @@ def generate_launch_description():
         os.environ["IGN_GAZEBO_RESOURCE_PATH"] = (':'.join(gazebo_resource_paths))
 
     # Load Empty World SDF from Gazebo Sim Package #
-    world_file = "empty.sdf"
+    #world_file = "empty.sdf"
+    #world_config = LaunchConfiguration("world")
+    #declare_world_arg = DeclareLaunchArgument("world",
+    #                                          default_value=["-r ", world_file],
+    #                                          description="SDF World File")
+    
+    world_file = "demo_world.sdf"  # Update to the desired world file
+    world_path = os.path.join(get_package_share_directory('robot_gazebo'), 'worlds', world_file)
     world_config = LaunchConfiguration("world")
+
     declare_world_arg = DeclareLaunchArgument("world",
-                                              default_value=["-r ", world_file],
-                                              description="SDF World File")
+                                          default_value=[world_path],
+                                          description="SDF World File")
     
     # Declare GazeboSim Launch #
     gzsim_pkg = get_package_share_directory("ros_gz_sim")

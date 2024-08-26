@@ -19,6 +19,9 @@ def generate_launch_description():
     spawn_controllers_launch_file = os.path.join(
         get_package_share_directory('robot_gazebo'), 'launch', 'start_controllers.launch.py')
     
+    scan_merger_launch_file = os.path.join(
+        get_package_share_directory('ros2_laser_scan_merger'), 'launch', 'merge_2_scan.launch.py')
+    
 
     return LaunchDescription([
         # Launch first_launch.py
@@ -56,6 +59,17 @@ def generate_launch_description():
                 # Launch second_launch.py
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource(spawn_controllers_launch_file),
+                    launch_arguments={}.items(),
+                ),
+            ],
+        ),
+
+        TimerAction(
+            period=1.0, 
+            actions=[
+                # Launch second_launch.py
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource(scan_merger_launch_file),
                     launch_arguments={}.items(),
                 ),
             ],
