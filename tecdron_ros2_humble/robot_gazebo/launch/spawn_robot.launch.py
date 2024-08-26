@@ -37,7 +37,7 @@ def generate_launch_description():
         executable="parameter_bridge",
         name="ign_bridge",
         arguments=[
-            "/clock" + "@rosgraph_msgs/msg/Clock" + "[ignition.msgs.Clock",
+            "/clock" + "@rosgraph_msgs/msg/Clock" + "@ignition.msgs.Clock",
             "/cmd_vel" + "@geometry_msgs/msg/Twist" + "@ignition.msgs.Twist",
             "/tf" + "@tf2_msgs/msg/TFMessage" + "[ignition.msgs.Pose_V",
             "/odom" + "@nav_msgs/msg/Odometry" + "[ignition.msgs.Odometry",

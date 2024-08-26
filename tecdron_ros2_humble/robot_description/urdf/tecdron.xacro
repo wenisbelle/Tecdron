@@ -61,6 +61,6 @@
 	</xacro:sensor_sick_s300>
 
 	<xacro:sensor_sick_s300 name="rear_sick" parent="base_link" color="white">
-		<origin xyz="-0.635 -0.406 0.145" rpy="${PI} 0 -${(3*PI)/4}"/>
+		<origin xyz="-0.576 -0.406 0.145" rpy="${PI} 0 -${(3*PI)/4}"/>
 	</xacro:sensor_sick_s300>
 </robot>
