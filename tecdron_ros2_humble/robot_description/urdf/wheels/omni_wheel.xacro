@@ -15,7 +15,7 @@
   </xacro:macro>
 
   <!-- Set up of the Wheel -->
-  <xacro:macro name="omni_wheel" params="prefix parent *origin">
+  <xacro:macro name="omni_wheel" params="prefix parent *origin ">
 
     <xacro:if value="${prefix == 'tecdron_front_left'}">
       <xacro:property name="fdir" value="1 -1 0" />
@@ -51,8 +51,8 @@
     </link>
     
     <joint name="${prefix}_wheel_joint" type="continuous">
-      <!--parent link="${parent}"/-->
-      <parent link="base_link"/>
+      <parent link="${parent}"/>
+      <!--parent link="base_link"/-->
       <child link="${prefix}_wheel_link"/>
       <xacro:insert_block name="origin" />
       <axis xyz="0 1 0"/>
@@ -81,6 +81,9 @@
       </surface>
     </collision>
   </gazebo>
+
+
+
 
   </xacro:macro>
     
