@@ -31,6 +31,9 @@ public:
     velocity_subscription_ = this->create_subscription<geometry_msgs::msg::Twist>(
         "cmd_vel", 10,
         std::bind(&MoveRobot::velocity_callback, this, std::placeholders::_1));
+
+    RCLCPP_INFO(this->get_logger(), "Wheel control method initialized");
+
   }
 
 private:
@@ -42,7 +45,7 @@ private:
     wheel_speed.insert(wheel_speed.end(), wheel_speed.begin(), wheel_speed.end()); // Duplicate the wheel speeds to match the number of joints in the controller
     message.data = wheel_speed;
     joints_publisher_->publish(message);
-    RCLCPP_INFO(this->get_logger(), "Linear X: '%f'. Linear Y: '%f'. Angular:'%f'",vx, vy, vz);
+    //RCLCPP_INFO(this->get_logger(), "Linear X: '%f'. Linear Y: '%f'. Angular:'%f'",vx, vy, vz);
   }
 
   void velocity_callback(const geometry_msgs::msg::Twist::SharedPtr msg) {

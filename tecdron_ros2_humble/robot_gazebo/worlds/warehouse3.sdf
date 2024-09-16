@@ -1,5 +1,11 @@
 <sdf version='1.9'>
   <world name='empty'>
+
+    <!-- Add this state block to control the paused state -->
+    <state world_name="empty">
+      <paused>false</paused>  <!-- Set to false to start unpaused -->
+    </state>
+    
     <physics name='1ms' type='ignored'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
@@ -9,6 +15,7 @@
     <plugin name='gz::sim::systems::UserCommands' filename='ignition-gazebo-user-commands-system'/>
     <plugin name='gz::sim::systems::SceneBroadcaster' filename='ignition-gazebo-scene-broadcaster-system'/>
     <plugin name='gz::sim::systems::Contact' filename='ignition-gazebo-contact-system'/>
+
     <gravity>0 0 -9.8</gravity>
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
     <atmosphere type='adiabatic'/>

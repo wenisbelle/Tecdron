@@ -50,6 +50,17 @@
     </visual>
   </link>
 
+  	<!-- Odometry Plugin attached to the robot's base -->
+    <gazebo>
+        <plugin filename="ignition-gazebo-odometry-publisher-system" name="ignition::gazebo::systems::OdometryPublisher">
+            <odom_topic>/tecdron/base_link/odometry</odom_topic>
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_link</child_frame_id>
+            <use_local_frame>true</use_local_frame>
+            <dimensions>3</dimensions>
+        </plugin>
+    </gazebo>
+
   </xacro:macro>
 </robot>
 
