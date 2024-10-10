@@ -6,8 +6,15 @@
     <!--xacro:include filename="$(find robot_description)/urdf/base/tecdron_base.gazebo.xacro" /-->
     <!-- Robot mechanical and motor parameters -->
     <xacro:property name="PI" value="3.1415926535897931"/>
-    <xacro:property name="wheel_width" value="0.175" />
-    <xacro:property name="wheel_radius" value="0.127" />
+    <xacro:property name="width" value="0.50" />
+    <xacro:property name="length" value="0.70" />
+    <xacro:property name="height" value="0.20" />
+    <xacro:property name="base_mass" value="150.0" />
+    
+    <xacro:property name="ixx" value="${(1/12.0) * base_mass * (height * height + length * length)}" />
+    <xacro:property name="iyy" value="${(1/12.0) * base_mass * (width * width + length * length)}" />
+    <xacro:property name="izz" value="${(1/12.0) * base_mass * (width * width + height * height)}" />
+
 
     <!-- BASE FOOTPRINT-->
     <link name="base_footprint">
@@ -38,9 +45,9 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="10" />
+      <mass value="${base_mass}" />
       <origin xyz="0 0 0" rpy="0 0 0" />
-      <inertia ixx="1.5417" ixy="0" ixz="0" iyy="3.467" iyz="0" izz="4.742" />
+      <inertia ixx="${ixx}" ixy="0" ixz="0" iyy="${iyy}" iyz="0" izz="${izz}" />
     </inertial>
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
