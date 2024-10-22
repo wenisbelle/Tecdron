@@ -115,6 +115,7 @@ B = [(2^(1/2)*g*r*uc_x)/(8*vlimite), (2^(1/2)*g*r*uc_x)/(8*vlimite),(2^(1/2)*g*r
     (2^(1/2)*g*r*uc_x)/(8*vlimite),-(2^(1/2)*g*r*uc_x)/(8*vlimite),(2^(1/2)*g*r*uc_x)/(8*vlimite),-(2^(1/2)*g*r*uc_x)/(8*vlimite);
     (g*m*(2^(1/2)*l*r*uc_x - 2^(1/2)*r*uc_x*w))/(8*Iz*vlimite), -(g*m*(2^(1/2)*l*r*uc_x - 2^(1/2)*r*uc_x*w))/(8*Iz*vlimite), -(g*m*(2^(1/2)*l*r*uc_x - 2^(1/2)*r*uc_x*w))/(8*Iz*vlimite), (g*m*(2^(1/2)*l*r*uc_x - 2^(1/2)*r*uc_x*w))/(8*Iz*vlimite)];
    
+B(3,:) = 7.5*B(3,:);
 
 C = eye(3);
 D = zeros(3,4);

@@ -76,17 +76,17 @@ def generate_launch_description():
             ],
         ),
 
-        TimerAction(
-            period=15.0,
-            actions=[
-                Node(
-                    package="robot_description",
-                    executable="wheel_control_method",
-                    name="wheel_control_method",
-                    output="screen",
-            )
-            ],
-        ),
+        #TimerAction(
+        #    period=15.0,
+        #    actions=[
+        #        Node(
+        #            package="robot_description",
+        #            executable="wheel_control_method",
+        #            name="wheel_control_method",
+        #            output="screen",
+        #    )
+        #    ],
+        #),
 
         TimerAction(
             period=16.0,
