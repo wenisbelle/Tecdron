@@ -86,34 +86,38 @@ private:
     Eigen::Matrix<float, 4, 3> D;
 
     Controller() {
-        A << -807.7,  222.7,    0,      0,       0,
-             190.6, -531,  -13.15,    0,       0,
-             0,  -9.577, -900.4,  234.2,     0,
-             0,     0,    -69,   -364.2,  4.553,
-             0,     0,     0,   0.9319,  -429.4;
+        A << -0.3116,  0.1647,  -0.0016,  -0.0005,  -0.0000,
+          0.1409, -0.1069,  -0.0089,  -0.0027,  -0.0000,
+         -0.0010, -0.0065,  -0.3946,   0.1855,   0.0010,
+          0.0001,  0.0006,  -0.0547,   0.0301,   0.0057,
+          0.0000,  0.0000,  -0.0001,   0.0012,  -0.0354;
 
-        B << -1073,  -1684,  824.5,
-             53.94,  897.4, -418.5,
-             670.5,   449,  -195.4,
-             576.1,  10.26, -30.86,
-             502.8, -59.79, -2.678;
+        B << -1.8280,  -2.5304,   1.2475,
+          -0.2764,   1.4002,  -0.6393,
+           1.2851,   0.6740,  -0.3055,
+           1.3989,  -0.0349,  -0.0532,
+           1.2142,  -0.1442,  -0.0065;
 
-        C << 21.93,  -18.87,  144.4,  -100.7,  13.85,
-             75.43,  157.8,  -14.99,  -84.24,  278.4,
-            -294.9, -514.5,  -39.34, -383.5,  -58.98,
-             389.3,  648.5,  171.8,   170.8,   375.7;
+        C <<  6.1391,  -7.1188,   46.5238,  -38.4334,    6.4692,
+          37.0834,  76.6929,   -3.0061,  -44.8515,  134.0147,
+        -137.7471, -254.0060,    1.1048, -200.4365,  -29.5463,
+         179.6186,  321.1417,   44.1334,  103.1433,  181.7447;
 
-        D.setZero(); // Set all elements of D to zero
+        D << 13.3333,   8.4611,   0.2921,
+           9.6942,  -8.6161,   0.2352,
+          11.3076,  10.5586,  -3.0698,
+          12.4502, -10.6754,   3.5251;
+
     }
   };
 
 
   void wheel_timer_callback() {
     auto message = std_msgs::msg::Float64MultiArray();
-    /*std::vector<double> wheel_speed = {wheel_speed_left_front, wheel_speed_right_front, wheel_speed_left_back, wheel_speed_right_back};    
+    std::vector<double> wheel_speed = {wheel_speed_left_front, wheel_speed_right_front, wheel_speed_left_back, wheel_speed_right_back};    
     wheel_speed.insert(wheel_speed.end(), wheel_speed.begin(), wheel_speed.end()); // Duplicate the wheel speeds to match the number of joints in the controller
     message.data = wheel_speed;
-    wheel_publisher_->publish(message);*/
+    wheel_publisher_->publish(message);
   }
 
   void controller_callback(){
@@ -122,16 +126,28 @@ private:
     std::chrono::duration<double> delta_time = now - last_time;
     
     error_k1 = commands - measured_states;
-    i_error = i_error + (error_k1 - error_k)*delta_time.count();
+    i_error = i_error + (error_k1)*delta_time.count();
   
-    auto i_X_k1 = K.A*X_k + K.B*i_error;
-    X_k1 = X_k + i_X_k1*delta_time.count();
+    X_k1 = K.A*X_k + K.B*i_error;
 
-    Y = K.C*X_k1;
+    Y = K.C*X_k1 + K.D*i_error;
 
     X_k = X_k1;
     error_k = error_k1;
     last_time = now;
+
+    for (int i = 0; i < Y.rows(); i++)
+    {
+      if (Y(i) > 100)
+      {
+        Y(i) = 100;
+      }
+      else if (Y(i) < -100)
+      {
+        Y(i) = -100;
+      }
+    }
+    
 
     wheel_speed_left_front = Y(0);
     wheel_speed_right_front = Y(1);
@@ -140,6 +156,7 @@ private:
 
     std::cout << "error: " << error_k1 << std::endl;
     //std::cout << "Wheel speeds: " << wheel_speed_left_front << " " << wheel_speed_right_front << " " << wheel_speed_right_back << " " << wheel_speed_left_back << std::endl;
+    //std::cout << "Matrix" << Y << std::endl;
   }
 
  

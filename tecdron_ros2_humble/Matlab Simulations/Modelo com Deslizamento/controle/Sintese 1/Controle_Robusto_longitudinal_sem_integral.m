@@ -178,5 +178,5 @@ K = ss(CL.Blocks.K) % representação do espaço de estado controlador
  % figure
  % viewGoal(Req11,CL)
 %% Controle digital
-T = 0.05;
+T = 0.005;
 [KA,KB,KC,KD] = c2dm(K.A,K.B,K.C,K.D,T,'tustin')
