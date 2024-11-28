@@ -31,6 +31,9 @@ public:
     velocity_subscription_ = this->create_subscription<geometry_msgs::msg::Twist>(
         "cmd_vel", 10,
         std::bind(&MoveRobot::velocity_callback, this, std::placeholders::_1));
+
+    RCLCPP_INFO(this->get_logger(), "Wheel control method initialized");
+
   }
 
 private:
@@ -42,7 +45,7 @@ private:
     wheel_speed.insert(wheel_speed.end(), wheel_speed.begin(), wheel_speed.end()); // Duplicate the wheel speeds to match the number of joints in the controller
     message.data = wheel_speed;
     joints_publisher_->publish(message);
-    RCLCPP_INFO(this->get_logger(), "Linear X: '%f'. Linear Y: '%f'. Angular:'%f'",vx, vy, vz);
+    //RCLCPP_INFO(this->get_logger(), "Linear X: '%f'. Linear Y: '%f'. Angular:'%f'",vx, vy, vz);
   }
 
   void velocity_callback(const geometry_msgs::msg::Twist::SharedPtr msg) {
@@ -55,8 +58,12 @@ private:
   void calculate_wheel_speeds(float vx, float vy, float wz) {
     wheel_speed_left_front = (vx - vy - (L+W) * wz) / WHEEL_RADIUS;
     wheel_speed_right_front = (vx + vy + (L+W) * wz) / WHEEL_RADIUS;
-    wheel_speed_left_back = (vx + vy - (L+W) * wz)/ WHEEL_RADIUS;
     wheel_speed_right_back = (vx - vy + (L+W) * wz) / WHEEL_RADIUS;
+    wheel_speed_left_back = (vx + vy - (L+W) * wz)/ WHEEL_RADIUS;
+    /*wheel_speed_left_front = 0.25;
+    wheel_speed_right_front = -0.25;
+    wheel_speed_right_back = -0.25;
+    wheel_speed_left_back = 0.25;*/
   }
 
   rclcpp::TimerBase::SharedPtr timer_;

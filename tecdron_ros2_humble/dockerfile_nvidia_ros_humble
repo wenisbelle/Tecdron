@@ -32,7 +32,8 @@ RUN apt-get install -y ros-humble-ros2-control \
     ros-humble-joint-state-publisher \
     ros-humble-joint-trajectory-controller \
     ros-humble-velocity-controllers \
-    ros-humble-pointcloud-to-laserscan
+    ros-humble-pointcloud-to-laserscan \
+    ros-humble-plotjuggler-ros
 
 # colocar aqui o git clone desse meu projeto
 #RUN cd src && git clone https://github.com/wenisbelle/Tecdron.git

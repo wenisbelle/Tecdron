@@ -17,6 +17,7 @@
 
 	
 	<xacro:tecdron_base/>
+
 	
 	<xacro:omni_wheel prefix="tecdron_front_left" parent="base_link">
 		<origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 ${PI/4}"/>

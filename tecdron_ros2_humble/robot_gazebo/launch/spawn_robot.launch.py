@@ -40,15 +40,17 @@ def generate_launch_description():
             "/clock" + "@rosgraph_msgs/msg/Clock" + "@ignition.msgs.Clock",
             "/cmd_vel" + "@geometry_msgs/msg/Twist" + "@ignition.msgs.Twist",
             "/tf" + "@tf2_msgs/msg/TFMessage" + "[ignition.msgs.Pose_V",
-            "/odom" + "@nav_msgs/msg/Odometry" + "[ignition.msgs.Odometry",
+            "/tecdron/base_link/odometry" + "@nav_msgs/msg/Odometry" + "[ignition.msgs.Odometry",
             "/front_sick/laser/scan" + "@sensor_msgs/msg/LaserScan" + "[ignition.msgs.LaserScan",
             "/rear_sick/laser/scan" + "@sensor_msgs/msg/LaserScan" + "[ignition.msgs.LaserScan",
             "/imu" + "@sensor_msgs/msg/Imu" + "[ignition.msgs.IMU",
+            "/world/empty/model/tecdron/joint_state" + "@sensor_msgs/msg/JointState" + "[ignition.msgs.Model",
             "/world/empty/model/tecdron/joint_state" + "@sensor_msgs/msg/JointState" + "[ignition.msgs.Model",
             
         ],
         remappings=[
             ('/world/empty/model/tecdron/joint_state', 'joint_states'),
+            ('/tecdron/base_link/odometry', 'true_odom'),
         ],
         output="screen",
     )

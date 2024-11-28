@@ -32,12 +32,13 @@ def generate_launch_description():
     #                                          default_value=["-r ", world_file],
     #                                          description="SDF World File")
     
-    world_file = "demo_world.sdf"  # Update to the desired world file
+    world_file = "warehouse3.sdf"  # Update to the desired world file
     world_path = os.path.join(get_package_share_directory('robot_gazebo'), 'worlds', world_file)
     world_config = LaunchConfiguration("world")
 
     declare_world_arg = DeclareLaunchArgument("world",
                                           default_value=[world_path],
+                                          #default_value=[world_file],
                                           description="SDF World File")
     
     # Declare GazeboSim Launch #

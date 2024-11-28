@@ -4,6 +4,7 @@ from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
+from launch_ros.actions import Node
 
 def generate_launch_description():
     # Get the path to the launch files
@@ -43,7 +44,7 @@ def generate_launch_description():
         ),
         # Delay before launching the spawner
         TimerAction(
-            period=5.0,  
+            period=12.0,  
             actions=[
                 # Launch second_launch.py
                 IncludeLaunchDescription(
@@ -54,7 +55,7 @@ def generate_launch_description():
         ),
 
         TimerAction(
-            period=5.0, 
+            period=15.0, 
             actions=[
                 # Launch second_launch.py
                 IncludeLaunchDescription(
@@ -65,7 +66,7 @@ def generate_launch_description():
         ),
 
         TimerAction(
-            period=1.0, 
+            period=15.0, 
             actions=[
                 # Launch second_launch.py
                 IncludeLaunchDescription(
@@ -74,5 +75,45 @@ def generate_launch_description():
                 ),
             ],
         ),
+
+        #TimerAction(
+        #    period=15.0,
+        #    actions=[
+        #        Node(
+        #            package="robot_description",
+        #            executable="wheel_control_method",
+        #            name="wheel_control_method",
+        #            output="screen",
+        #    )
+        #    ],
+        #),
+
+        TimerAction(
+            period=16.0,
+            actions=[
+                Node(
+                    package="wheel_odometry",
+                    executable="wheel_encoder",
+                    name="wheel_encoder",
+                    output="screen",
+            )
+            ],
+        ),
+
+        TimerAction(
+            period=17.0,
+            actions=[
+                Node(
+                    package="state_stimation",
+                    executable="odometry_model",
+                    name="odometry_model",
+                    output="screen",
+            )
+            ],
+        ),
+
+
+
+        
 
     ])
