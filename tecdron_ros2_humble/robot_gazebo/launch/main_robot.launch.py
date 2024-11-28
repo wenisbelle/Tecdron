@@ -112,6 +112,18 @@ def generate_launch_description():
             ],
         ),
 
+        TimerAction(
+            period=18.0,
+            actions=[
+                Node(
+                    package="wheel_control",
+                    executable="ss_control",
+                    name="ss_control",
+                    output="screen",
+            )
+            ],
+        ),
+
 
 
         

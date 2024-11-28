@@ -26,6 +26,8 @@ RUN apt-get install -y python3-rosdep \
 
 RUN apt-get install -y git
 
+RUN apt update
+
 RUN apt-get install -y ros-humble-ros2-control \
     ros-humble-ign-ros2-control \
     ros-humble-joint-state-broadcaster \
@@ -33,18 +35,32 @@ RUN apt-get install -y ros-humble-ros2-control \
     ros-humble-joint-trajectory-controller \
     ros-humble-velocity-controllers \
     ros-humble-pointcloud-to-laserscan \
-    ros-humble-plotjuggler-ros
+    ros-humble-rmw-cyclonedds-cpp \
+    ros-humble-plotjuggler-ros \
+    ros-humble-rqt-robot-steering
 
-# colocar aqui o git clone desse meu projeto
-#RUN cd src && git clone https://github.com/wenisbelle/Tecdron.git
-#RUN source /opt/ros/humble/setup.bash
+RUN apt-get install -y net-tools \
+    && apt-get install -y gedit
 
-# Install dependencies
-#RUN rosdep init 
-#RUN rosdep update
-#RUN rosdep install --from-paths src --ignore-src -r -y
+RUN mkdir -p /tecdron_ws/src \
+    && source /opt/ros/humble/setup.bash     
 
-#RUN source /opt/ros/humble/setup.bash
-#RUN colcon build
-#RUN source/install/setup.bash
+COPY ./ /tecdron_ws/src 
+
+WORKDIR /tecdron_ws
+
+RUN source /opt/ros/humble/setup.bash  \
+    && colcon build \
+    && source install/setup.bash
+
+# Set environment variables
+#ENV ROS_DOMAIN_ID=1
+#ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+
+# Define entrypoint
+ENTRYPOINT ["/bin/bash", "-c", "source /opt/ros/humble/setup.bash && source install/setup.bash && ros2 launch robot_gazebo main_robot.launch.py"]
+
+
+
 
