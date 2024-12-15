@@ -18,7 +18,7 @@ def generate_launch_description():
         get_package_share_directory('robot_gazebo'), 'launch', 'spawn_robot.launch.py')
     
     spawn_controllers_launch_file = os.path.join(
-        get_package_share_directory('robot_gazebo'), 'launch', 'start_controllers.launch.py')
+        get_package_share_directory('robot_gazebo'), 'launch', 'start_controllers2.launch.py')
     
     scan_merger_launch_file = os.path.join(
         get_package_share_directory('ros2_laser_scan_merger'), 'launch', 'merge_2_scan.launch.py')
@@ -76,18 +76,6 @@ def generate_launch_description():
             ],
         ),
 
-        #TimerAction(
-        #    period=15.0,
-        #    actions=[
-        #        Node(
-        #            package="robot_description",
-        #            executable="wheel_control_method",
-        #            name="wheel_control_method",
-        #            output="screen",
-        #    )
-        #    ],
-        #),
-
         TimerAction(
             period=16.0,
             actions=[
@@ -112,8 +100,17 @@ def generate_launch_description():
             ],
         ),
 
-
-
+        #TimerAction(
+        #    period=18.0,
+        #    actions=[
+        #        Node(
+        #            package="wheel_control",
+        #            executable="ss_control",
+        #            name="ss_control",
+        #            output="screen",
+        #    )
+        #    ],
+        #),
         
 
     ])

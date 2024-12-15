@@ -32,9 +32,13 @@ endif()
 add_executable(wheel_control_method src/wheel_control_method.cpp)
 ament_target_dependencies(wheel_control_method rclcpp geometry_msgs std_msgs)
 
+add_executable(velocity_stamped src/velocity_stamped.cpp)
+ament_target_dependencies(velocity_stamped rclcpp geometry_msgs)
+
 
 install(TARGETS
-  wheel_control_method       
+  wheel_control_method
+  velocity_stamped       
   DESTINATION lib/${PROJECT_NAME} 
  )
 

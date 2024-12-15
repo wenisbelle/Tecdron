@@ -61,13 +61,6 @@ K = tunableSS('K',5,4,3);
 K.D.Value = 0;      % set D = 0
 K.D.Free = false;   % fix D to zero
 
-%Ponderações
-%V1
-% w_e1 = 0.8*(s+1)/(s+10);
-% w_e2 = 0.8*(s+1)/(s+10);
-% 
-% w_u1= 0.5*(s+1)/(s+10);
-% w_u2= 0.5*(s+1)/(s+10);
 
 
 % %V2

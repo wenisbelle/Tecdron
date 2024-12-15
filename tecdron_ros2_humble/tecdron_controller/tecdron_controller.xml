@@ -1,0 +1,8 @@
+<library path="tecdron_controller">
+  <class name="tecdron_controller/TecdronController"
+         type="tecdron_controller::TecdronController" base_class_type="controller_interface::ControllerInterface">
+  <description>
+    TecdronController ros2_control controller.
+  </description>
+  </class>
+</library>

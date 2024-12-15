@@ -73,7 +73,7 @@
       <surface>
         <friction>
           <ode>
-            <mu>1.0</mu>
+            <mu>1.0</mu> 
             <mu2>0.03</mu2>
             <fdir1 ignition:expressed_in="base_link">${fdir}</fdir1>
           </ode>
