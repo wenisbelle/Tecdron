@@ -3,7 +3,7 @@
 This repository includes the simulations made for synthesis and testing of the Tecdron, an omnidirectional mobile base with four mecanum wheels.
 The main goal was developing a robust controller feasible to apply using the ros2_control framework. It includes the Matlab Simulations and the ROS2 environment for testing. 
 
-![Tecdron_base](images/tecdron_base.png)
+![Tecdron_base](tecdron_ros2_humble/images/tecdron_base.png)
 
 
 ---
@@ -14,7 +14,7 @@ In parallel, ROS2 is increasing its presence in the industry, and the main simul
 
 However, as long as I could see, the simulations use an open loop in order to control the movement of the robot, using the inverse kinematics. 
 
-![inverse_k](images/inverse_k.png)
+![inverse_k](tecdron_ros2_humble/images/inverse_k.png)
 
 
 Although this method can be really useful as an initial step and make the robot working e moving in gazebo, this is even the method taught in this open class of The Construct (https://www.youtube.com/watch?v=px4AJ5VE-1U&t=1234s), it's not very precise and the rotational movement in general has a very diferent behavior. So it could cause problems when you're testing SLAM and Navigations, for example, algorithms and consequently the results in the simulation probably will not be sufficiently reliable. 
@@ -95,7 +95,7 @@ Just a note, the controller had to be discretazed in order to work
 properly in ros2, that's why you will see the tustin function 
 applied into the controller. 
 
-![closed_loop](images/closed_loop.png)
+![closed_loop](tecdron_ros2_humble/images/closed_loop.png)
 
 
 
