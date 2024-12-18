@@ -70,7 +70,7 @@ just transfer the values to the simulation.
 
 ### closed_loop_outside_ros2_control branch
 
-While in the branch closed_loop_outside_ros2_control we have a half term. The closed loop is working properly but in a separate package named wheel_control and with the ss_control.cpp file. It will feed the forward controller present in the wheels with the proper wheel velocity. So in this step we are calculating the best wheel velocities from outside of the ros2_control framework.
+While in the branch closed_loop_outside_ros2_control we have a half term. The closed loop is working properly but in a separate package named wheel_control and with the ss_control.cpp file. It will feed the forward controller present in the wheels with the proper wheel velocity. But instead of doing this inside the ROS2 control it perform the calculations in a ros2 conventional node and sends to ros2 control through a topic. 
 
 ### Main Branch
 
