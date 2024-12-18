@@ -103,17 +103,17 @@ def generate_launch_description():
             ],
         ),
 
-        #TimerAction(
-        #    period=18.0,
-        #    actions=[
-        #        Node(
-        #            package="wheel_control",
-        #            executable="ss_control",
-        #            name="ss_control",
-        #            output="screen",
-        #    )
-        #    ],
-        #),
+        TimerAction(
+            period=18.0,
+            actions=[
+                Node(
+                    package="robot_description",
+                    executable="wheel_control_method",
+                    name="wheel_control_method",
+                    output="screen",
+            )
+            ],
+        ),
         
 
     ])
