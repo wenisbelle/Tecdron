@@ -72,13 +72,29 @@ just transfer the values to the simulation.
 
 While in the branch closed_loop_outside_ros2_control we have a half term. The closed loop is working properly but in a separate package named wheel_control and with the ss_control.cpp file. It will feed the forward controller present in the wheels with the proper wheel velocity. So in this step we are calculating the best wheel velocities from outside of the ros2_control framework.
 
+To achieve proper results it's necessary a very reliable and robust odometry data. At this point the only goal is to control the velocities, so it's necessary the groud speeds of the vehicle. 
+
+In real life some sensor fusion theory would be necessary. But we can cheat a little using a gazebo plugin that could give us these parameters from the engine. This will simplify our work. This plugin outputs the topic /true_odom, that is used in the control logic. 
+
 ### Main Branch
 
-Finally, in the main branch we have the system running the controller inside the ROS2 control framework.
+Finally, in the main branch we have the system running the controller inside the ROS2 control framework. The model used as a reference, that saved most of the work for implementation, was present in this video of The Construct: https://www.youtube.com/watch?v=px4AJ5VE-1U&t=1234s.  
+
+The main modification was making this controller be able to subscribe to one more topic, in this case the /true_odom topic, which contains the data from the linear and angular speed of the base. And apply the logic inside the on_update method. 
+
+Here there is a little problem, the idea was letting this odometry topic configurable from a yaml file (in this case you can find it in the robot_description package named as mecanum_drive_controller.yaml), to simplify the use of this controller in different contexts. But for some reason, it always get an empty string from the yaml file in the parameter :
+
+    filtered_odometry_topic: true_odom
+
+I didn't undestand exactly the reason, but I plan to fix this soon. 
+
+Unfortunately, for the moment if you want to change the topic you need to change inside the ros2_control package and build it. 
 
 #### Results
 
 Using the plotjunger we can visualize how well the controller is handling the commands.  
+
+
 
 ## Control System
 
@@ -94,6 +110,7 @@ in a simplified version inside Simulink running the
 Just a note, the controller had to be discretazed in order to work
 properly in ros2, that's why you will see the tustin function 
 applied into the controller. 
+
 
 ![closed_loop](tecdron_ros2_humble/images/closed_loop.png)
 
