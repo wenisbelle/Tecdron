@@ -48,7 +48,6 @@ install(
     launch
     meshes
     config
-    test
     src
   DESTINATION
     share/${PROJECT_NAME}/
