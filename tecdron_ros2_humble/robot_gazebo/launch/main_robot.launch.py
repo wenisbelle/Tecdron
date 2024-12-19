@@ -18,7 +18,7 @@ def generate_launch_description():
         get_package_share_directory('robot_gazebo'), 'launch', 'spawn_robot.launch.py')
     
     spawn_controllers_launch_file = os.path.join(
-        get_package_share_directory('robot_gazebo'), 'launch', 'start_controllers2.launch.py')
+        get_package_share_directory('robot_gazebo'), 'launch', 'start_controllers.launch.py')
     
     scan_merger_launch_file = os.path.join(
         get_package_share_directory('ros2_laser_scan_merger'), 'launch', 'merge_2_scan.launch.py')

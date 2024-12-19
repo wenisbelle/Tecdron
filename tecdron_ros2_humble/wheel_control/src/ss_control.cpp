@@ -154,7 +154,7 @@ private:
     wheel_speed_right_back = Y(2);
     wheel_speed_left_back = Y(3);
 
-    std::cout << "error: " << error_k1 << std::endl;
+    
     //std::cout << "Wheel speeds: " << wheel_speed_left_front << " " << wheel_speed_right_front << " " << wheel_speed_right_back << " " << wheel_speed_left_back << std::endl;
     //std::cout << "Matrix" << Y << std::endl;
   }
